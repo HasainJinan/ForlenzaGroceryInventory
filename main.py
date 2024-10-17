@@ -8,8 +8,18 @@ def add_item(inventory, name, price, quantity):
     price (str): The price of the item
     quantity (str): The quantity of the item
     """
-    inventory[name] = {"price": price, "quantity": quantity}
-    print(f"{name} added to the inventory.")
+    if name in inventory:
+        choose = input("Are you sure you want to overwrite this item? Y/N: ")
+        if choose == "Y":
+            inventory[name] = {"price": price, "quantity": quantity}
+            print(f"{name} added to the inventory.")
+        elif choose == "N":
+            pass
+        else:
+            print("Sorry I do not understand.")
+    else:
+        inventory[name] = {"price": price, "quantity": quantity}
+        print(f"{name} added to the inventory.")
 
 def remove_item(inventory, item_name):
     """
@@ -19,10 +29,14 @@ def remove_item(inventory, item_name):
     inventory (dict): The current inventory
     item_name (str): The name of the item to remove
     """
-    del inventory[item_name]
-    print(f"{item_name} removed from the inventory.")
+    try:
+        del inventory[item_name]
+    except:
+        print(item_name, " does not exist in the inventory.")
+    else:
+        print(f"{item_name} removed from the inventory.")
 
-def update_quantity(inventory, item_name, new_quantity):
+def update_quantity(item_name, new_quantity):
     """
     Update the quantity of an item in the inventory.
     
@@ -31,7 +45,7 @@ def update_quantity(inventory, item_name, new_quantity):
     item_name (str): The name of the item to update
     new_quantity (str): The new quantity of the item
     """
-    inventory[item_name]["quantity"] == new_quantity
+    inventory[item_name] = {"quantity": new_quantity}
     print(f"{item_name} quantity updated to {new_quantity}.")
 
 def display_inventory(inventory):
@@ -47,13 +61,16 @@ def display_inventory(inventory):
         print("Current Inventory:")
         for name in inventory:
             item = inventory[name]
-            print(f"{name}: Price: ${item['price']:.2f}, Quantity: {item['quantity']}")
+            print(str(name) + ": Price: $" + str(item['price']) + ", Quantity: " + str(item['quantity']))
 
 # Initialize inventory with two example items
 inventory = {
     "apple": {"price": 0.50, "quantity": 100},
     "banana": {"price": 0.75, "quantity": 150}
 }
+
+#Initial inventory.
+display_inventory(inventory)
 
 while True:
     print("\n1. Add item\n2. Remove item\n3. Update quantity\n4. Display inventory\n5. Exit")
@@ -64,13 +81,16 @@ while True:
         price = input("Enter item price: ")
         quantity = int(input("Enter item quantity: "))
         add_item(inventory, name, price, quantity)
+        display_inventory(inventory)
     elif choice == "2":
         name = input("Enter item name to remove: ")
         remove_item(inventory, name)
+        display_inventory(inventory)
     elif choice == "3":
         name = input("Enter item name to update: ")
         quantity = input("Enter new quantity: ")
-        update_quantity(inventory, name, quantity)
+        update_quantity(name, quantity)
+        display_inventory(inventory)
     elif choice == "4":
         display_inventory(inventory)
     elif choice == "5":
