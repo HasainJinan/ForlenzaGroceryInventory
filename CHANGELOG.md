@@ -16,6 +16,15 @@
 
 ## Version 1.2
 - 2024-10-17
-- Added display inventory every time the user makes changes to the existing items.
+- Inventory is displayed every time the user attempts to make changes to the inventory.
 - Fixed program crashing when a user attempts to remove an item that does not exist in inventory.
-- Fixed no confirmation when overwriting an existing item.
+- Fixed no confirmation appearing when overwriting an existing item.
+
+## Version 1.3
+- 2024-10-18
+- Fixed bug where item quantity would not update after changing through "Update Quantity" option.
+- Removed "Display Inventory" option to avoid redundancy.
+- Improved application design for easier reading.
+- Features:
+  - Improper capitilization or extra spaces will trigger an autocorrect prompt when attempting to remove/update an item in the inventory.
+  - Added user-requested animations.
